@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mi Rutina Gym</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modal.css">
+    <link rel="stylesheet" href="timer.css">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Iconos -->
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+
+    <!-- Color de la barra del navegador -->
+    <meta name="theme-color" content="#121212">
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- CABECERA -->
+
+    <header class="topbar">
+
+        <h1>🏋️ Mi Rutina Gym</h1>
+
+        <p id="todayText">Cargando...</p>
+
+    </header>
+
+    <!-- CONTENIDO -->
+
+    <main id="content">
+
+        Cargando entrenamiento...
+
+    </main>
+
+    <!-- MENÚ INFERIOR -->
+
+    <nav class="bottomBar">
+
+        <button id="homeBtn">
+
+            🏠
+
+            <span>Inicio</span>
+
+        </button>
+
+        <button id="historyBtn">
+
+            📈
+
+            <span>Historial</span>
+
+        </button>
+
+        <button id="settingsBtn">
+
+            ⚙️
+
+            <span>Ajustes</span>
+
+        </button>
+
+    </nav>
+
+</div>
+<!-- ==========================
+     MODAL
+========================== -->
+
+<div id="modalOverlay" class="modal-overlay hidden">
+
+    <div class="modal">
+
+        <h2 id="modalTitulo">
+
+            🏋️ MiRutinaGym
+
+        </h2>
+
+        <p id="modalTexto">
+
+            Mensaje
+
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                id="modalCancel"
+                class="modal-btn cancel">
+
+                Cancelar
+
+            </button>
+
+            <button
+                id="modalOk"
+                class="modal-btn ok">
+
+                Aceptar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================
+     TIMER DESCANSO
+========================== -->
+
+<div id="timer" class="timer">
+
+    <h2>⏱ DESCANSO</h2>
+
+    <div
+        id="timerTime"
+        class="timer-time">
+
+        01:30
+
+    </div>
+
+    <div
+        id="timerInfo"
+        class="timer-info">
+
+        Press banca · Serie 1 de 4
+
+    </div>
+
+    <div class="timer-bar">
+
+        <div
+            id="timerProgress"
+            class="timer-progress">
+
+        </div>
+
+    </div>
+
+    <button
+        id="timerSkip">
+
+        ⏭ Omitir descanso
+
+    </button>
+
+<script src="js/rutina.js"></script>
+<script src="js/plan.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/training.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", ()=>{
+
+        navigator.serviceWorker.register("sw.js")
+        .then(()=>{
+
+            console.log("✅ Service Worker registrado");
+
+        })
+        .catch(error=>{
+
+            console.error(
+                "❌ Error Service Worker",
+                error
+            );
+
+        });
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

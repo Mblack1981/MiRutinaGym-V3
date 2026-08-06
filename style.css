@@ -1,0 +1,1361 @@
+/* =====================================================
+   MiRutinaGym V2.0
+   style.css
+===================================================== */
+
+/* ---------- RESET ---------- */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+
+    background:#121212;
+
+    color:#ffffff;
+
+}
+
+/* ---------- APP ---------- */
+
+#app{
+
+    max-width:520px;
+
+    margin:auto;
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ---------- CABECERA ---------- */
+
+.topbar{
+
+    background:#1c1c1e;
+
+    padding:28px 20px;
+
+    text-align:center;
+
+    border-bottom:1px solid #2f2f31;
+
+}
+
+.topbar h1{
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+.topbar p{
+
+    margin-top:10px;
+
+    color:#9ca3af;
+
+    font-size:15px;
+
+}
+
+/* ---------- CONTENIDO ---------- */
+
+main{
+
+    flex:1;
+
+    padding:20px;
+
+}
+
+/* ---------- TARJETA PRINCIPAL ---------- */
+
+.home-card{
+
+    background:#1f1f22;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+    animation:fade .35s;
+
+}
+
+.home-card h2{
+
+    font-size:60px;
+
+    text-align:center;
+
+}
+
+.home-card h1{
+
+    margin-top:12px;
+
+    text-align:center;
+
+    font-size:32px;
+
+}
+
+.home-card p{
+
+    margin-top:14px;
+
+    color:#c9c9c9;
+
+    text-align:center;
+
+    line-height:1.5;
+
+}
+
+/* ---------- BOTÓN ---------- */
+
+.start-btn{
+
+    width:100%;
+
+    margin-top:28px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#0A84FF;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.start-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.start-btn:active{
+
+    transform:scale(.98);
+
+}
+
+/* ---------- TARJETAS DE EJERCICIO ---------- */
+
+.exercise-card{
+
+    margin-top:22px;
+
+    background:#1f1f22;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.30);
+
+}
+
+.exercise-card h3{
+
+    margin-bottom:12px;
+
+    font-size:22px;
+
+}
+
+.exercise-card p{
+
+    margin:8px 0;
+
+    color:#d4d4d4;
+
+    line-height:1.4;
+
+}
+
+/* ---------- TABLA ---------- */
+
+.series-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:18px;
+
+}
+
+.series-table th{
+
+    background:#2f2f31;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+}
+
+.series-table td{
+
+    padding:10px;
+
+    text-align:center;
+
+}
+
+/* ---------- INPUTS ---------- */
+
+.series-table input{
+
+    width:72px;
+
+    padding:10px;
+
+    background:#343437;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    font-size:15px;
+
+}
+
+.series-table input:focus{
+
+    outline:none;
+
+    box-shadow:0 0 0 2px #0A84FF;
+
+}
+
+/* ---------- MENÚ ---------- */
+
+.bottomBar{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    background:#1c1c1e;
+
+    border-top:1px solid #2f2f31;
+
+    padding:14px 0;
+
+    position:sticky;
+
+    bottom:0;
+
+}
+
+.bottomBar button{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:5px;
+
+    font-size:22px;
+
+    transition:.20s;
+
+}
+
+.bottomBar button:hover{
+
+    transform:scale(1.08);
+
+}
+
+.bottomBar span{
+
+    font-size:12px;
+
+}
+
+/* ---------- IMAGEN EJERCICIO ---------- */
+
+.exercise-image{
+
+    width:100%;
+
+    height:180px;
+
+    border-radius:16px;
+
+    object-fit:cover;
+
+    margin-bottom:18px;
+
+    background:#2f2f31;
+
+}
+
+/* ---------- PROGRESO ---------- */
+
+.progress{
+
+    width:100%;
+
+    height:12px;
+
+    background:#2f2f31;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin:20px 0;
+
+}
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:#0A84FF;
+
+    transition:.4s;
+
+}
+
+/* ---------- ANIMACIONES ---------- */
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:600px){
+
+    main{
+
+        padding:15px;
+
+    }
+
+    .home-card{
+
+        padding:22px;
+
+    }
+
+    .exercise-card{
+
+        padding:18px;
+
+    }
+
+}
+/* =====================================================
+   PANEL DEBUG
+===================================================== */
+
+.debug-panel{
+
+    margin:20px 0;
+
+    padding:16px;
+
+    background:#2d2d2d;
+
+    border:2px solid #ff9800;
+
+    border-radius:16px;
+
+}
+
+.debug-panel h3{
+
+    margin-bottom:15px;
+
+    color:#ffb74d;
+
+}
+
+.debug-panel label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+}
+
+.debug-panel select{
+
+    width:100%;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    border:none;
+
+    margin-bottom:15px;
+
+    font-size:15px;
+
+}
+
+.debug-panel button{
+
+    width:100%;
+
+    margin-bottom:10px;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+.debug-clear{
+
+    background:#d32f2f;
+
+    color:white;
+
+}
+
+.debug-storage{
+
+    background:#455a64;
+
+    color:white;
+
+}
+
+.debug-reload{
+
+    background:#0A84FF;
+
+    color:white;
+
+}
+/* =====================================================
+   SERIE COMPLETADA
+===================================================== */
+
+.serie-ok.completada{
+
+    background:#34C759;
+
+    color:white;
+
+    box-shadow:0 0 12px rgba(52,199,89,.45);
+
+}
+
+.serie-ok:disabled{
+
+    cursor:default;
+
+    opacity:1;
+
+}
+/* =====================================================
+   FILA COMPLETADA
+===================================================== */
+
+tr.serie-completada td{
+
+    background:rgba(52,199,89,.18);
+
+    color:#ffffff;
+
+    transition:.30s;
+
+}
+
+tr.serie-completada input{
+
+    background:#2b3f31;
+
+    color:#ffffff;
+
+    border:1px solid #34C759;
+
+}
+/* ==========================
+   CABECERA EJERCICIO
+========================== */
+
+.exercise-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+   align-items:center;
+
+    gap:30px;
+
+}
+.exercise-info{
+
+    flex:1;
+
+}
+
+.exercise-info h3{
+
+    margin-top:0;
+
+    margin-bottom:18px;
+
+    font-size:30px;
+
+}
+
+.exercise-info p{
+
+    margin:8px 0;
+
+}
+
+.exercise-image{
+
+    width:150px;
+
+    height:150px;
+
+    background:#2f2f33;
+
+    border-radius:16px;
+
+    padding:10px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-shrink:0;
+
+}
+
+.exercise-image img{
+
+    width:140px;
+
+    height:140px;
+
+    object-fit:contain;
+
+}
+/* ==========================
+   AJUSTES ESTILO IOS
+========================== */
+
+
+.settings-group{
+
+    margin-top:20px;
+
+}
+
+.setting-card{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#1c1c1e;
+
+    border-radius:20px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,0.35);
+
+    cursor:pointer;
+
+}
+
+
+.setting-icon{
+
+    font-size:30px;
+
+    width:45px;
+
+}
+
+
+
+.setting-info{
+
+    flex:1;
+
+}
+
+
+
+.setting-info h3{
+
+    margin:0;
+
+    font-size:17px;
+
+}
+
+
+
+.setting-info p{
+
+    margin:5px 0 0;
+
+    color:#b0b0b0;
+
+    font-size:14px;
+
+}
+
+
+
+.setting-arrow{
+
+    font-size:26px;
+
+    color:#aaa;
+
+}
+
+
+
+.app-info{
+
+    margin-top:25px;
+
+}
+
+
+
+/* SWITCH IOS */
+
+
+.switch input{
+
+    display:none;
+
+}
+
+
+.switch span{
+
+    width:50px;
+
+    height:30px;
+
+    background:#ccc;
+
+    border-radius:20px;
+
+    display:block;
+
+    position:relative;
+
+}
+
+
+
+.switch span:after{
+
+    content:"";
+
+    width:26px;
+
+    height:26px;
+
+    background:white;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    top:2px;
+
+    left:2px;
+
+    transition:.3s;
+
+}
+
+
+
+.switch input:checked + span{
+
+    background:#34c759;
+
+}
+
+
+
+.switch input:checked + span:after{
+
+    transform:translateX(20px);
+
+}
+/* ==========================
+   GESTIÓN DE RUTINA
+========================== */
+
+
+.routine-day-card{
+
+    background:#1c1c1e;
+
+    border-radius:22px;
+
+    padding:20px;
+
+    margin-top:20px;
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,.35);
+
+}
+
+
+.routine-day-title{
+
+    font-size:14px;
+
+    color:#b0b0b0;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+
+.routine-day-card h2{
+
+    margin:0;
+
+    font-size:22px;
+
+}
+
+
+
+.routine-day-card p{
+
+    color:#777;
+
+}
+
+
+
+.exercise-setting-card{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#2c2c2e;
+
+    border-radius:16px;
+
+    padding:15px;
+
+    margin-top:12px;
+
+}
+
+
+
+.exercise-setting-info{
+
+    flex:1;
+
+}
+
+
+
+.exercise-setting-info h3{
+
+    margin:0;
+
+    font-size:16px;
+    color:white;
+
+}
+
+
+
+.exercise-setting-info p{
+
+    margin:5px 0 0;
+
+    font-size:14px;
+       color:#b0b0b0;
+
+}
+/* ==========================
+   COLORES GESTIÓN RUTINA OSCURO
+========================== */
+
+
+.routine-day-card h2{
+
+    color:#ffffff;
+
+}
+
+
+.routine-day-card p{
+
+    color:#b0b0b0;
+
+}
+
+
+.exercise-setting-info h3{
+
+    color:#ffffff;
+
+}
+
+
+.exercise-setting-info p{
+
+    color:#b0b0b0;
+
+}
+
+
+.setting-arrow{
+
+    color:#999;
+
+}
+/* ==========================
+   DETALLE EJERCICIO
+========================== */
+
+.exercise-detail-image{
+
+    width:180px;
+    height:180px;
+
+    margin:25px auto;
+
+    background:#2c2c2e;
+
+    border-radius:22px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:15px;
+
+}
+
+.exercise-detail-image img{
+
+    width:160px;
+    height:160px;
+
+    object-fit:contain;
+
+}
+
+.detail-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+.detail-card{
+
+    background:#1c1c1e;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.35);
+
+}
+
+.detail-icon{
+
+    font-size:26px;
+
+}
+
+.detail-label{
+
+    margin-top:10px;
+
+    color:#9ca3af;
+
+    font-size:14px;
+
+}
+
+.detail-value{
+
+    margin-top:8px;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:white;
+
+}
+
+.tip-card{
+
+    margin-top:20px;
+
+    background:#1c1c1e;
+
+    border-radius:20px;
+
+    padding:22px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.35);
+
+}
+
+.tip-card h3{
+
+    margin-bottom:15px;
+
+}
+
+.tip-card p{
+
+    color:#d4d4d4;
+
+    line-height:1.6;
+
+}
+
+.edit-button{
+
+    width:100%;
+
+    margin-top:22px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#0A84FF;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.back-button{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#2c2c2e;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+/* ==========================
+   EDITOR DE EJERCICIOS
+========================== */
+
+.editor-image{
+
+    width:170px;
+
+    height:170px;
+
+    margin:25px auto;
+
+    background:#1c1c1e;
+
+    border-radius:22px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:15px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.35);
+
+}
+
+.editor-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+}
+
+.editor-section{
+
+    margin-top:25px;
+
+}
+
+.editor-label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#bdbdbd;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.editor-input,
+.editor-textarea{
+
+    width:100%;
+
+    background:#2c2c2e;
+
+    color:white;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    font-size:16px;
+
+    margin-bottom:18px;
+
+}
+
+.editor-input:focus,
+.editor-textarea:focus{
+
+    outline:none;
+
+    box-shadow:0 0 0 2px #0A84FF;
+
+}
+
+.editor-textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+.editor-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.editor-button{
+
+    width:100%;
+
+    margin-top:18px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.editor-save{
+
+    background:#0A84FF;
+
+    color:white;
+
+}
+
+.editor-cancel{
+
+    background:#2c2c2e;
+
+    color:white;
+
+}
+
+.editor-reset{
+
+    background:#ff453a;
+
+    color:white;
+
+}
+/* =====================================================
+   MODAL CONFIRMACIONES
+===================================================== */
+
+
+#modalOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+}
+
+
+
+.modal{
+
+    width:90%;
+
+    max-width:380px;
+
+    background:#1c1c1e;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+
+}
+
+
+
+.modal h2{
+
+    margin-bottom:15px;
+
+}
+
+
+
+.modal p{
+
+    color:#c9c9c9;
+
+    line-height:1.5;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.modal button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    margin-top:10px;
+
+}
+
+
+
+#modalOk{
+
+    background:#1f7a3f;
+
+    color:white;
+
+}
+
+
+
+#modalCancel{
+
+    background:#2c2c2e;
+
+    color:white;
+
+}
+/* ==========================
+   PLAN SEMANAL
+========================== */
+
+.plan-select{
+
+    width:100%;
+
+    margin-top:10px;
+
+    background:#2c2c2e;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px;
+
+    font-size:15px;
+
+}
+
+.plan-select:focus{
+
+    outline:none;
+
+    box-shadow:0 0 0 2px #0A84FF;
+
+}

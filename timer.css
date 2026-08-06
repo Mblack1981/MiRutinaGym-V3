@@ -1,0 +1,206 @@
+/* ===================================================
+   TIMER
+=================================================== */
+
+.timer{
+
+    position:fixed;
+
+    left:50%;
+    bottom:20px;
+
+    transform:translateX(-50%);
+
+    width:min(92%,480px);
+
+    display:none;
+    flex-direction:column;
+    align-items:center;
+
+    background:#1f1f22;
+
+    border-radius:24px;
+
+    padding:24px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+
+    border:1px solid #353535;
+
+    z-index:9999;
+
+    animation:timerEntrada .25s ease;
+
+}
+
+.timer h2{
+
+    margin:0;
+
+    font-size:20px;
+
+    letter-spacing:1px;
+
+}
+
+.timer-time{
+
+    margin:18px 0 10px;
+
+    font-size:58px;
+
+    font-weight:700;
+
+    color:#0A84FF;
+
+}
+
+.timer-info{
+
+    text-align:center;
+
+    color:#bdbdbd;
+
+    line-height:1.5;
+
+    margin-bottom:20px;
+
+}
+
+.timer-bar{
+
+    width:100%;
+
+    height:14px;
+
+    background:#333;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    margin-bottom:22px;
+
+}
+
+.timer-progress{
+
+    width:100%;
+
+    height:100%;
+
+    background:#0A84FF;
+
+    transition:width .3s linear;
+
+}
+
+#timerSkip{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#2f2f31;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+#timerSkip:hover{
+
+    background:#444;
+
+}
+
+@keyframes timerEntrada{
+
+    from{
+
+        opacity:0;
+
+        transform:translate(-50%,40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translate(-50%,0);
+
+    }
+
+}
+/* ==========================
+   BOTÓN COMPLETAR SERIE
+========================== */
+
+.serie-ok{
+
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#555;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.serie-ok:hover{
+
+    background:#0A84FF;
+
+    transform:scale(1.08);
+
+}
+
+.serie-ok.completada{
+
+    background:#2ecc71;
+
+}
+/* =====================================================
+   FIN DESCANSO
+===================================================== */
+
+.timer.fin{
+
+    background:#34C759;
+
+    box-shadow:0 0 30px rgba(52,199,89,.55);
+
+    transform:translateX(-50%) scale(1.03);
+
+    transition:all .35s ease;
+
+}
+.timer.ocultando{
+
+    opacity:0;
+
+    transform:translateX(-50%) translateY(20px);
+
+    transition:all .35s ease;
+
+}
