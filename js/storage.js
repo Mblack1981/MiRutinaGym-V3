@@ -735,7 +735,16 @@ function cargarEjerciciosPersonalizados(){
 
     });
 
+console.log("🔎 EJERCICIOS PERSONALIZADOS CARGADOS:", ejercicios);
 
+ejercicios.forEach(ejercicio => {
+    console.log(
+        "🖼️ IMAGEN:",
+        ejercicio.nombre,
+        "→",
+        ejercicio.imagen
+    );
+});
     ejerciciosPersonalizados.push(
 
         ...ejercicios
