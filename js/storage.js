@@ -667,8 +667,6 @@ function guardarEjerciciosPersonalizados(){
 }
 
 
-
-
 function cargarEjerciciosPersonalizados(){
 
     const datos = localStorage.getItem(
@@ -688,10 +686,63 @@ function cargarEjerciciosPersonalizados(){
     const ejercicios = JSON.parse(datos);
 
 
+    ejercicios.forEach(ejercicio => {
+
+
+        switch(ejercicio.nombre){
+
+
+            case "Remo con barra":
+
+                ejercicio.imagen =
+                    "img/remo_con_barra.webp";
+
+                break;
+
+
+            case "Press inclinado manuernas":
+
+                ejercicio.imagen =
+                    "img/press_inclinado.webp";
+
+                break;
+
+
+            case "Extensiones de cuadriceps":
+
+                ejercicio.imagen =
+                    "img/extensiones_cuadriceps.webp";
+
+                break;
+
+
+            case "Elevacion gemelos":
+
+                ejercicio.imagen =
+                    "img/elevacion_gemelos.webp";
+
+                break;
+
+
+            case "Abductores en maquina":
+
+                ejercicio.imagen =
+                    "img/abductores.webp";
+
+                break;
+
+        }
+
+    });
+
+
     ejerciciosPersonalizados.push(
 
         ...ejercicios
 
     );
+
+
+    guardarEjerciciosPersonalizados();
 
 }
