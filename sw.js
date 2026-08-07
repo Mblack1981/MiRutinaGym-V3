@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "MiRutinaGym-v3.1-offline";
+const CACHE_NAME = "MiRutinaGym-v3.1-imagenes";
 
 const FILES_TO_CACHE = [
 
