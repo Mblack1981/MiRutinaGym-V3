@@ -96,16 +96,11 @@ timer.segundosIniciales = segundos;
    DESBLOQUEAR AUDIO EN iOS
 ========================== */
 
-sonidoFinDescanso.load();
+sonidoFinDescanso.muted = true;
+
+sonidoFinDescanso.currentTime = 0;
 
 sonidoFinDescanso.play()
-    .then(() => {
-
-        sonidoFinDescanso.pause();
-
-        sonidoFinDescanso.currentTime = 0;
-
-    })
     .catch(() => {});
 
 timer.activo = true;
@@ -156,7 +151,6 @@ function cuentaAtras(){
 /* ==========================
    FINALIZAR
 ========================== */
-
 function finalizarDescanso(){
 
     clearInterval(timer.intervalo);
@@ -168,6 +162,8 @@ function finalizarDescanso(){
     const ui = obtenerTimer();
 
     ui.panel.classList.add("fin");
+
+    sonidoFinDescanso.muted = false;
 
     sonidoFinDescanso.currentTime = 0;
 
