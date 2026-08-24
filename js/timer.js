@@ -13,6 +13,13 @@ const sonidoFinDescanso = new Audio(
 );
 
 sonidoFinDescanso.preload = "auto";
+window.probarSonidoTimer = function(){
+
+    sonidoFinDescanso.currentTime = 0;
+
+    sonidoFinDescanso.play();
+
+};
 
 /* ==========================
    ESTADO
