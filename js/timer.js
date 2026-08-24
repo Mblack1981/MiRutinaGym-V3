@@ -13,13 +13,6 @@ const sonidoFinDescanso = new Audio(
 );
 
 sonidoFinDescanso.preload = "auto";
-window.probarSonidoTimer = function(){
-
-    sonidoFinDescanso.currentTime = 0;
-
-    sonidoFinDescanso.play();
-
-};
 
 /* ==========================
    ESTADO
@@ -96,36 +89,52 @@ function iniciarDescanso(
 
 ){
 
-    timer.segundos = segundos;
-    timer.segundosIniciales = segundos;
+   timer.segundos = segundos;
+timer.segundosIniciales = segundos;
 
-    timer.activo = true;
+/* ==========================
+   DESBLOQUEAR AUDIO EN iOS
+========================== */
 
-    const ui = obtenerTimer();
-    ui.panel.classList.remove("fin");
+sonidoFinDescanso.load();
+
+sonidoFinDescanso.play()
+    .then(() => {
+
+        sonidoFinDescanso.pause();
+
+        sonidoFinDescanso.currentTime = 0;
+
+    })
+    .catch(() => {});
+
+timer.activo = true;
+
+const ui = obtenerTimer();
+
+ui.panel.classList.remove("fin");
 ui.panel.classList.remove("ocultando");
 
-    ui.info.textContent =
-        `${ejercicio} · Serie ${serie} de ${totalSeries}`;
+ui.info.textContent =
+    `${ejercicio} · Serie ${serie} de ${totalSeries}`;
 
-    actualizarTimer();
+actualizarTimer();
 
-    mostrarTimer();
+mostrarTimer();
 
-    if(timer.intervalo){
+if(timer.intervalo){
 
-        clearInterval(timer.intervalo);
+    clearInterval(timer.intervalo);
 
-    }
+}
 
-    timer.intervalo = setInterval(
+timer.intervalo = setInterval(
 
-        cuentaAtras,
+    cuentaAtras,
 
-        1000
+    1000
 
-    );
-
+);
 }
 /* ==========================
    CUENTA ATRÁS
