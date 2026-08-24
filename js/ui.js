@@ -2683,7 +2683,16 @@ boton.disabled = true;
 peso.disabled = true;
 
 reps.disabled = true;
+/* ==========================
+   PREPARAR AUDIO EN iOS
+========================== */
 
+sonidoFinDescanso.muted = true;
+
+sonidoFinDescanso.currentTime = 0;
+
+sonidoFinDescanso.play()
+    .catch(() => {});
 iniciarDescanso(
 
     Number(boton.dataset.descanso),

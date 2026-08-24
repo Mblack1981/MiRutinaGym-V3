@@ -89,48 +89,40 @@ function iniciarDescanso(
 
 ){
 
-   timer.segundos = segundos;
-timer.segundosIniciales = segundos;
+    timer.segundos = segundos;
 
-/* ==========================
-   DESBLOQUEAR AUDIO EN iOS
-========================== */
+    timer.segundosIniciales = segundos;
 
-sonidoFinDescanso.muted = true;
+    timer.activo = true;
 
-sonidoFinDescanso.currentTime = 0;
+    const ui = obtenerTimer();
 
-sonidoFinDescanso.play()
-    .catch(() => {});
+    ui.panel.classList.remove("fin");
+    ui.panel.classList.remove("ocultando");
 
-timer.activo = true;
+    ui.info.textContent =
+        `${ejercicio} · Serie ${serie} de ${totalSeries}`;
 
-const ui = obtenerTimer();
+    actualizarTimer();
 
-ui.panel.classList.remove("fin");
-ui.panel.classList.remove("ocultando");
+    mostrarTimer();
 
-ui.info.textContent =
-    `${ejercicio} · Serie ${serie} de ${totalSeries}`;
+    if(timer.intervalo){
 
-actualizarTimer();
+        clearInterval(timer.intervalo);
 
-mostrarTimer();
+    }
 
-if(timer.intervalo){
+    timer.intervalo = setInterval(
 
-    clearInterval(timer.intervalo);
+        cuentaAtras,
+
+        1000
+
+    );
 
 }
 
-timer.intervalo = setInterval(
-
-    cuentaAtras,
-
-    1000
-
-);
-}
 /* ==========================
    CUENTA ATRÁS
 ========================== */
