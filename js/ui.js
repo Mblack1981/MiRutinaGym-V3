@@ -2467,16 +2467,27 @@ function guardarSerieCompletada(ejercicioId, serie){
         claveSerie(ejercicioId,serie)
     ) || {};
 
-
     datos.completada = true;
 
+    Storage.guardar(
+        claveSerie(ejercicioId,serie),
+        datos
+    );
+
+}
+
+
+function desmarcarSerieCompletada(ejercicioId, serie){
+
+    const datos = Storage.leer(
+        claveSerie(ejercicioId,serie)
+    ) || {};
+
+    datos.completada = false;
 
     Storage.guardar(
-
         claveSerie(ejercicioId,serie),
-
         datos
-
     );
 
 }
@@ -2491,7 +2502,6 @@ function comprobarSeries(){
 
     botones.forEach(boton=>{
 
-
         const ejercicio = boton.dataset.ejercicio;
         const serie = boton.dataset.serie;
 
@@ -2501,38 +2511,48 @@ function comprobarSeries(){
         );
 
 
-        if(datos && datos.completada){
+        const fila = boton.closest("tr");
 
+        if(!fila){
 
-            boton.classList.add("completada");
-
-            boton.textContent="✓";
-
-            boton.disabled=true;
-
-
-            const fila = boton.closest("tr");
-
-            if(fila){
-
-                fila.classList.add("serie-completada");
-
-            }
-
-
-            const peso=fila.querySelector(".peso");
-            const reps=fila.querySelector(".reps");
-
-
-            if(peso) peso.disabled=true;
-            if(reps) reps.disabled=true;
-
+            return;
 
         }
 
 
-    });
+        const peso = fila.querySelector(".peso");
+        const reps = fila.querySelector(".reps");
 
+
+        if(datos && datos.completada){
+
+            boton.classList.add("completada");
+
+            boton.textContent = "✓";
+
+            boton.disabled = false;
+
+
+            fila.classList.add("serie-completada");
+
+
+            if(peso){
+
+                peso.disabled = true;
+
+            }
+
+
+            if(reps){
+
+                reps.disabled = true;
+
+            }
+
+
+        }
+
+    });
 
 }
 function cargarSerie(ejercicioId,serie){
@@ -2635,13 +2655,67 @@ botonesSerie.forEach(boton=>{
         const ejercicio = boton.dataset.ejercicio;
         const serie = boton.dataset.serie;
 
+
         const peso = document.querySelector(
             `.peso[data-ejercicio="${ejercicio}"][data-serie="${serie}"]`
         );
 
+
         const reps = document.querySelector(
             `.reps[data-ejercicio="${ejercicio}"][data-serie="${serie}"]`
         );
+
+
+        /* ==========================
+           DESMARCAR SERIE
+        ========================== */
+
+        if(boton.classList.contains("completada")){
+
+            desmarcarSerieCompletada(
+                ejercicio,
+                serie
+            );
+
+
+            boton.classList.remove("completada");
+
+            boton.textContent = "○";
+
+
+            const fila = boton.closest("tr");
+
+            if(fila){
+
+                fila.classList.remove("serie-completada");
+
+            }
+
+
+            if(peso){
+
+                peso.disabled = false;
+
+            }
+
+
+            if(reps){
+
+                reps.disabled = false;
+
+            }
+
+
+            actualizarProgreso();
+
+            return;
+
+        }
+
+
+        /* ==========================
+           COMPROBAR DATOS
+        ========================== */
 
         if(
             peso.value.trim()==="" ||
@@ -2659,55 +2733,80 @@ botonesSerie.forEach(boton=>{
             return;
 
         }
-/* ==========================
-   MARCAR SERIE COMPLETADA
-========================== */
-
-boton.classList.add("completada");
 
 
-guardarSerieCompletada(
-    ejercicio,
-    serie
-);
+        /* ==========================
+           MARCAR SERIE COMPLETADA
+        ========================== */
+
+        boton.classList.add("completada");
 
 
-actualizarProgreso();
+        guardarSerieCompletada(
+            ejercicio,
+            serie
+        );
 
-boton.closest("tr").classList.add("serie-completada");
 
-boton.textContent = "✓";
+        actualizarProgreso();
 
-boton.disabled = true;
 
-peso.disabled = true;
+        boton.closest("tr").classList.add(
+            "serie-completada"
+        );
 
-reps.disabled = true;
-/* ==========================
-   PREPARAR AUDIO EN iOS
-========================== */
 
-sonidoFinDescanso.muted = true;
+        boton.textContent = "✓";
 
-sonidoFinDescanso.currentTime = 0;
 
-sonidoFinDescanso.play()
-    .catch(() => {});
-iniciarDescanso(
+        /*
+           IMPORTANTE:
+           El botón NO se deshabilita.
+           Así podemos volver a pulsarlo
+           para corregir la serie.
+        */
 
-    Number(boton.dataset.descanso),
 
-    boton.dataset.nombre,
+        boton.disabled = false;
 
-    Number(serie),
 
-    Number(boton.dataset.total)
+        peso.disabled = true;
 
-);
+        reps.disabled = true;
+
+
+        /* ==========================
+           PREPARAR AUDIO EN iOS
+        ========================== */
+
+        sonidoFinDescanso.muted = true;
+
+        sonidoFinDescanso.currentTime = 0;
+
+        sonidoFinDescanso.play()
+            .catch(() => {});
+
+
+        /* ==========================
+           INICIAR DESCANSO
+        ========================== */
+
+        iniciarDescanso(
+
+            Number(boton.dataset.descanso),
+
+            boton.dataset.nombre,
+
+            Number(serie),
+
+            Number(boton.dataset.total)
+
+        );
 
     });
 
 });
+
 
 comprobarSeries();
 
