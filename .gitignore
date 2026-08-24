@@ -2,3 +2,6 @@
 img_backup_original/
 img_pesada_original/
 node_modules
+
+# Local Netlify folder
+.netlify
