@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "netlify-cli": "^27.3.0"
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
   }
 }
