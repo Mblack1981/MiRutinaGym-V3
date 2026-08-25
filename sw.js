@@ -1,6 +1,22 @@
+
 "use strict";
 
-const CACHE_NAME = "MiRutinaGym-v3.1-final-v3";
+/* ===================================================
+   SERVICE WORKER
+   MiRutinaGym V3.1 FINAL ESTABLE OFFLINE
+=================================================== */
+
+
+/* ==========================
+   VERSIÓN DE CACHÉ
+========================== */
+
+const CACHE_NAME = "MiRutinaGym-v3.1-final-v4";
+
+
+/* ==========================
+   ARCHIVOS A CACHEAR
+========================== */
 
 const FILES_TO_CACHE = [
 
@@ -19,10 +35,13 @@ const FILES_TO_CACHE = [
     "js/modal.js",
     "js/timer.js",
     "js/plan.js",
+    "js/push.js",
 
     "manifest.json",
 
-       "img/icon-192.png",
+    "sounds/pitido_final_serie_2.wav",
+
+    "img/icon-192.png",
     "img/icon-512.png",
     "img/apple-touch-icon.png",
     "img/favicon-32.png",
@@ -65,45 +84,97 @@ const FILES_TO_CACHE = [
 
 ];
 
+
+/* ==========================
+   INSTALACIÓN
+========================== */
+
 self.addEventListener("install", event => {
 
     event.waitUntil(
 
-        caches.open(CACHE_NAME).then(cache => {
+        caches.open(CACHE_NAME)
 
-            return cache.addAll(FILES_TO_CACHE);
+            .then(cache => {
 
-        })
+                console.log(
+                    "📦 Instalando caché:",
+                    CACHE_NAME
+                );
+
+                return cache.addAll(
+                    FILES_TO_CACHE
+                );
+
+            })
+
+            .then(() => {
+
+                console.log(
+                    "✅ Todos los archivos guardados en caché."
+                );
+
+            })
 
     );
 
 });
+
+
+/* ==========================
+   ACTIVACIÓN
+========================== */
 
 self.addEventListener("activate", event => {
 
     event.waitUntil(
 
-        caches.keys().then(keys =>
+        caches.keys()
 
-            Promise.all(
+            .then(keys => {
 
-                keys.map(key => {
+                return Promise.all(
 
-                    if(key !== CACHE_NAME){
+                    keys.map(key => {
 
-                        return caches.delete(key);
+                        if(key !== CACHE_NAME){
 
-                    }
+                            console.log(
+                                "🗑️ Eliminando caché antigua:",
+                                key
+                            );
 
-                })
+                            return caches.delete(key);
 
-            )
+                        }
 
-        )
+                        return null;
+
+                    })
+
+                );
+
+            })
+
+            .then(() => {
+
+                console.log(
+                    "✅ Service Worker activado:",
+                    CACHE_NAME
+                );
+
+                return self.clients.claim();
+
+            })
 
     );
 
 });
+
+
+/* ==========================
+   FETCH
+========================== */
 
 self.addEventListener("fetch", event => {
 
@@ -113,45 +184,133 @@ self.addEventListener("fetch", event => {
 
     }
 
+
     event.respondWith(
 
-        caches.match(event.request).then(response => {
+        caches.match(event.request)
 
-            return response || fetch(event.request);
+            .then(response => {
 
-        })
+                if(response){
+
+                    return response;
+
+                }
+
+
+                return fetch(event.request);
+
+            })
+
+            .catch(error => {
+
+                console.warn(
+                    "⚠️ Error cargando recurso:",
+                    event.request.url,
+                    error
+                );
+
+
+                /*
+                   No dejamos que el Service Worker
+                   produzca un "Uncaught (in promise)".
+                */
+
+                return new Response(
+                    "",
+                    {
+                        status: 503,
+                        statusText:
+                            "Recurso no disponible"
+                    }
+                );
+
+            })
 
     );
 
 });
+
+
 /* ==========================
    PUSH NOTIFICATIONS
 ========================== */
 
 self.addEventListener("push", event => {
 
-    if (!event.data) {
+    console.log(
+        "📨 Evento Push recibido."
+    );
+
+
+    if(!event.data){
+
+        console.warn(
+            "⚠️ Push recibido sin datos."
+        );
+
         return;
+
     }
 
-    const data = event.data.json();
 
-    const titulo = data.titulo || "MiRutinaGym";
+    let data = {};
+
+
+    try {
+
+        data = event.data.json();
+
+    } catch(error) {
+
+        console.warn(
+            "⚠️ El Push no contiene JSON válido."
+        );
+
+        data = {
+
+            mensaje:
+                event.data.text()
+
+        };
+
+    }
+
+
+    const titulo =
+        data.titulo ||
+        "MiRutinaGym";
+
 
     const opciones = {
-        body: data.mensaje || "Tienes una nueva notificación",
-        icon: "img/icon-192.png",
-        badge: "img/icon-192.png",
+
+        body:
+            data.mensaje ||
+            "Tienes una nueva notificación",
+
+        icon:
+            "img/icon-192.png",
+
+        badge:
+            "img/icon-192.png",
+
         data: {
+
             url: "./"
+
         }
+
     };
+
 
     event.waitUntil(
 
         self.registration.showNotification(
+
             titulo,
+
             opciones
+
         )
 
     );
@@ -159,33 +318,59 @@ self.addEventListener("push", event => {
 });
 
 
-self.addEventListener("notificationclick", event => {
+/* ==========================
+   CLICK EN NOTIFICACIÓN
+========================== */
 
-    event.notification.close();
+self.addEventListener(
+    "notificationclick",
+    event => {
 
-    event.waitUntil(
+        event.notification.close();
 
-        clients.matchAll({
-            type: "window",
-            includeUncontrolled: true
-        }).then(clientList => {
 
-            for (const client of clientList) {
+        event.waitUntil(
 
-                if ("focus" in client) {
-                    return client.focus();
+            clients.matchAll({
+
+                type: "window",
+
+                includeUncontrolled: true
+
+            })
+
+            .then(clientList => {
+
+                for(
+                    const client of clientList
+                ){
+
+                    if("focus" in client){
+
+                        return client.focus();
+
+                    }
+
                 }
 
-            }
 
-            if (clients.openWindow) {
-                return clients.openWindow(
-                    event.notification.data.url
-                );
-            }
+                if(clients.openWindow){
 
-        })
+                    return clients.openWindow(
 
-    );
+                        event.notification
+                            .data
+                            .url
 
-});
+                    );
+
+                }
+
+            })
+
+        );
+
+    }
+
+);
+

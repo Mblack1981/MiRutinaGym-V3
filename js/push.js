@@ -28,7 +28,8 @@ async function activarPush() {
 
         }
 
-        const permiso = await Notification.requestPermission();
+        const permiso =
+            await Notification.requestPermission();
 
         console.log(
             "Permiso de notificaciones:",
@@ -119,50 +120,21 @@ async function activarPush() {
 
 
         /* ==========================
-           ENVIAR SUSCRIPCIÓN A NETLIFY
+           ENVIAR NOTIFICACIÓN DE PRUEBA
         ========================== */
 
-        const envio =
-            await fetch(
-                "/.netlify/functions/send-push",
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        subscription:
-                            subscription
-
-                    })
-
-                }
-            );
-
-
         const resultado =
-            await envio.json();
+            await enviarNotificacionPush(
+                subscription,
+                "MiRutinaGym",
+                "🏋️ ¡Notificación Push funcionando correctamente!"
+            );
 
 
         console.log(
             "📨 Respuesta de Netlify:",
             resultado
         );
-
-
-        if (!envio.ok) {
-
-            throw new Error(
-                resultado.error ||
-                "Error enviando la notificación Push."
-            );
-
-        }
 
 
         console.log(
@@ -178,6 +150,95 @@ async function activarPush() {
         );
 
     }
+
+}
+
+
+/* ==========================
+   ENVIAR NOTIFICACIÓN PUSH
+========================== */
+
+async function enviarNotificacionPush(
+    subscription,
+    titulo,
+    mensaje
+) {
+
+    if (!subscription) {
+
+        throw new Error(
+            "No existe una suscripción Push."
+        );
+
+    }
+
+
+    const envio =
+        await fetch(
+            "/.netlify/functions/send-push",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    subscription:
+                        subscription,
+
+                    titulo:
+                        titulo,
+
+                    mensaje:
+                        mensaje
+
+                })
+
+            }
+        );
+
+
+    const resultado =
+        await envio.json();
+
+
+    if (!envio.ok) {
+
+        throw new Error(
+            resultado.error ||
+            "Error enviando la notificación Push."
+        );
+
+    }
+
+
+    return resultado;
+
+}
+
+
+/* ==========================
+   OBTENER SUSCRIPCIÓN ACTUAL
+========================== */
+
+async function obtenerSuscripcionPush() {
+
+    if (!("serviceWorker" in navigator)) {
+
+        return null;
+
+    }
+
+
+    const registro =
+        await navigator.serviceWorker.ready;
+
+
+    return await registro.pushManager.getSubscription();
 
 }
 

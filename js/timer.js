@@ -4,6 +4,7 @@
 =================================================== */
 
 "use strict";
+
 /* ==========================
    SONIDO
 ========================== */
@@ -14,19 +15,22 @@ const sonidoFinDescanso = new Audio(
 
 sonidoFinDescanso.preload = "auto";
 
+
 /* ==========================
    ESTADO
 ========================== */
 
 const timer = {
 
-    activo:false,
+    activo: false,
 
-    segundos:0,
+    segundos: 0,
 
-    segundosIniciales:0,
+    segundosIniciales: 0,
 
-    intervalo:null
+    finTimestamp: null,
+
+    intervalo: null
 
 };
 
@@ -37,21 +41,22 @@ const timer = {
 
 function obtenerTimer(){
 
-    return{
+    return {
 
-        panel:document.getElementById("timer"),
+        panel: document.getElementById("timer"),
 
-        tiempo:document.getElementById("timerTime"),
+        tiempo: document.getElementById("timerTime"),
 
-        info:document.getElementById("timerInfo"),
+        info: document.getElementById("timerInfo"),
 
-        barra:document.getElementById("timerProgress"),
+        barra: document.getElementById("timerProgress"),
 
-        boton:document.getElementById("timerSkip")
+        boton: document.getElementById("timerSkip")
 
     };
 
 }
+
 
 /* ==========================
    MOSTRAR
@@ -59,9 +64,10 @@ function obtenerTimer(){
 
 function mostrarTimer(){
 
-    obtenerTimer().panel.style.display="flex";
+    obtenerTimer().panel.style.display = "flex";
 
 }
+
 
 /* ==========================
    OCULTAR
@@ -69,9 +75,10 @@ function mostrarTimer(){
 
 function ocultarTimer(){
 
-    obtenerTimer().panel.style.display="none";
+    obtenerTimer().panel.style.display = "none";
 
 }
+
 
 /* ==========================
    INICIAR
@@ -93,19 +100,28 @@ function iniciarDescanso(
 
     timer.segundosIniciales = segundos;
 
+    timer.finTimestamp =
+        Date.now() + (segundos * 1000);
+
     timer.activo = true;
+
 
     const ui = obtenerTimer();
 
+
     ui.panel.classList.remove("fin");
+
     ui.panel.classList.remove("ocultando");
+
 
     ui.info.textContent =
         `${ejercicio} · Serie ${serie} de ${totalSeries}`;
 
+
     actualizarTimer();
 
     mostrarTimer();
+
 
     if(timer.intervalo){
 
@@ -113,15 +129,17 @@ function iniciarDescanso(
 
     }
 
+
     timer.intervalo = setInterval(
 
         cuentaAtras,
 
-        1000
+        250
 
     );
 
 }
+
 
 /* ==========================
    CUENTA ATRÁS
@@ -129,21 +147,48 @@ function iniciarDescanso(
 
 function cuentaAtras(){
 
-    timer.segundos--;
+    if(!timer.activo){
+
+        return;
+
+    }
+
+
+    const restante =
+        Math.max(
+            0,
+            timer.finTimestamp - Date.now()
+        );
+
+
+    timer.segundos =
+        Math.ceil(restante / 1000);
+
 
     actualizarTimer();
 
-    if(timer.segundos <= 0){
+
+    if(restante <= 0){
 
         finalizarDescanso();
 
     }
 
 }
+
+
 /* ==========================
    FINALIZAR
 ========================== */
+
 function finalizarDescanso(){
+
+    if(!timer.activo){
+
+        return;
+
+    }
+
 
     clearInterval(timer.intervalo);
 
@@ -151,23 +196,105 @@ function finalizarDescanso(){
 
     timer.activo = false;
 
+    timer.segundos = 0;
+
+    timer.finTimestamp = null;
+
+
+    /* ==========================
+       NOTIFICACIÓN PUSH
+    ========================== */
+
+    obtenerSuscripcionPush()
+
+        .then(subscription => {
+
+            if(!subscription){
+
+                console.log(
+                    "⚠️ No existe suscripción Push."
+                );
+
+                return null;
+
+            }
+
+
+            return enviarNotificacionPush(
+
+                subscription,
+
+                "MiRutinaGym",
+
+                "⏱️ Descanso terminado. ¡Ya puedes hacer la siguiente serie!"
+
+            );
+
+        })
+
+        .then(resultado => {
+
+            if(resultado){
+
+                console.log(
+                    "📨 Notificación de descanso enviada:",
+                    resultado
+                );
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "❌ Error enviando notificación de descanso:",
+                error
+            );
+
+        });
+
+
+    /* ==========================
+       EFECTO VISUAL
+    ========================== */
+
     const ui = obtenerTimer();
 
+
     ui.panel.classList.add("fin");
+
+
+    /* ==========================
+       SONIDO
+    ========================== */
 
     sonidoFinDescanso.muted = false;
 
     sonidoFinDescanso.currentTime = 0;
 
-    sonidoFinDescanso.play();
+
+    sonidoFinDescanso.play()
+
+        .catch(error => {
+
+            console.warn(
+                "⚠️ No se pudo reproducir el sonido:",
+                error
+            );
+
+        });
+
 
     sonidoFinDescanso.onended = ()=>{
 
         ui.panel.classList.add("ocultando");
 
+
         setTimeout(()=>{
 
             ui.panel.classList.remove("fin");
+
             ui.panel.classList.remove("ocultando");
 
             ocultarTimer();
@@ -178,6 +305,7 @@ function finalizarDescanso(){
 
 }
 
+
 /* ==========================
    SIGUIENTE SERIE
 ========================== */
@@ -185,60 +313,105 @@ function finalizarDescanso(){
 function irASiguienteSerie(botonActual){
 
     const botones = [
+
         ...document.querySelectorAll(".serie-ok")
+
     ];
 
-    const indice = botones.indexOf(botonActual);
+
+    const indice =
+        botones.indexOf(botonActual);
+
 
     if(indice === -1){
+
         return;
+
     }
 
-    const siguiente = botones[indice + 1];
+
+    const siguiente =
+        botones[indice + 1];
+
 
     if(!siguiente){
+
         return;
+
     }
 
+
     siguiente.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
+
+        behavior: "smooth",
+
+        block: "center"
+
     });
 
-    const fila = siguiente.closest("tr");
 
-    const peso = fila.querySelector(".peso");
+    const fila =
+        siguiente.closest("tr");
+
+
+    const peso =
+        fila.querySelector(".peso");
+
 
     setTimeout(()=>{
+
         peso.focus();
+
     },500);
 
 }
 
+
 /* ==========================
    ACTUALIZAR PANTALLA
 ========================== */
+
 function actualizarTimer(){
 
     const ui = obtenerTimer();
 
-    const minutos = Math.floor(timer.segundos/60);
 
-    const segundos = timer.segundos%60;
+    const minutos =
+        Math.floor(
+            timer.segundos / 60
+        );
+
+
+    const segundos =
+        timer.segundos % 60;
+
 
     ui.tiempo.textContent =
+
         `${String(minutos).padStart(2,"0")}:${String(segundos).padStart(2,"0")}`;
+
 
     /* ==========================
        BARRA DE PROGRESO
     ========================== */
 
     const porcentaje =
-        (timer.segundos / timer.segundosIniciales) * 100;
 
-    ui.barra.style.width = porcentaje + "%";
+        timer.segundosIniciales > 0
+
+            ? (
+                timer.segundos /
+                timer.segundosIniciales
+              ) * 100
+
+            : 0;
+
+
+    ui.barra.style.width =
+        porcentaje + "%";
 
 }
+
 
 /* ==========================
    OMITIR DESCANSO
@@ -252,34 +425,44 @@ function omitirDescanso(){
 
     timer.activo = false;
 
+    timer.segundos = 0;
+
+    timer.finTimestamp = null;
+
     ocultarTimer();
 
 }
+
 
 /* ==========================
    INICIO
 ========================== */
 
-window.addEventListener("DOMContentLoaded",()=>{
+window.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+        const botonOmitir =
+            document.getElementById("timerSkip");
 
 
-    const botonOmitir = document.getElementById("timerSkip");
+        if(botonOmitir){
+
+            botonOmitir.addEventListener(
+
+                "click",
+
+                omitirDescanso
+
+            );
+
+        }
 
 
-    if(botonOmitir){
-
-        botonOmitir.addEventListener(
-
-            "click",
-
-            omitirDescanso
-
-        );
+        ocultarTimer();
 
     }
 
-
-    ocultarTimer();
-
-
-});
+);
