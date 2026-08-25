@@ -473,3 +473,51 @@ window.addEventListener(
     }
 
 );
+
+/* ==========================
+   RECUPERAR TEMPORIZADOR
+   AL VOLVER A LA APLICACIÓN
+========================== */
+
+document.addEventListener(
+
+    "visibilitychange",
+
+    ()=>{
+
+        if(
+            document.visibilityState === "visible"
+        ){
+
+            /* ==========================
+               SI EL TEMPORIZADOR SIGUE ACTIVO
+            ========================== */
+
+            if(timer.activo){
+
+                cuentaAtras();
+
+                return;
+
+            }
+
+
+            /* ==========================
+               SI EL DESCANSO YA TERMINÓ
+            ========================== */
+
+            if(
+                timer.segundos === 0 &&
+                timer.finTimestamp === null
+            ){
+
+                ocultarTimer();
+
+            }
+
+        }
+
+    }
+
+);
+
