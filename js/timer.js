@@ -1,3 +1,4 @@
+
 /* ===================================================
    MiRutinaGym V2.0
    timer.js
@@ -266,6 +267,30 @@ function finalizarDescanso(){
 
 
     /* ==========================
+       OCULTAR TEMPORIZADOR
+       AL FINALIZAR DESCANSO
+    ========================== */
+
+    setTimeout(()=>{
+
+        ui.panel.classList.add("ocultando");
+
+
+        setTimeout(()=>{
+
+            ui.panel.classList.remove("fin");
+
+            ui.panel.classList.remove("ocultando");
+
+            ocultarTimer();
+
+        },350);
+
+
+    },300);
+
+
+    /* ==========================
        SONIDO
     ========================== */
 
@@ -284,24 +309,6 @@ function finalizarDescanso(){
             );
 
         });
-
-
-    sonidoFinDescanso.onended = ()=>{
-
-        ui.panel.classList.add("ocultando");
-
-
-        setTimeout(()=>{
-
-            ui.panel.classList.remove("fin");
-
-            ui.panel.classList.remove("ocultando");
-
-            ocultarTimer();
-
-        },350);
-
-    };
 
 }
 
