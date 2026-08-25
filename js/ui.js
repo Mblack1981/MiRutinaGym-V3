@@ -763,215 +763,239 @@ function mostrarHistorial(){
 }
 function mostrarAjustes(){
 
-    let html = `
+let html = `
 
-    <div class="home-card">
+<div class="home-card">
 
-        <h1>⚙️ Ajustes</h1>
+    <h1>⚙️ Ajustes</h1>
 
-        <p>
-            Configura MiRutinaGym
-        </p>
+    <p>
+        Configura MiRutinaGym
+    </p>
+
+</div>
+
+
+<div class="settings-group">
+
+
+    <div class="setting-card" id="ajusteRutina">
+
+        <div class="setting-icon">
+            🏋️
+        </div>
+
+        <div class="setting-info">
+
+            <h3>
+                Rutina
+            </h3>
+
+            <p>
+                Modificar ejercicios y entrenamientos.
+            </p>
+
+        </div>
+
+        <div class="setting-arrow">
+            >
+        </div>
 
     </div>
 
 
-    <div class="settings-group">
+    <div class="setting-card" id="ajustePlanSemanal">
+
+        <div class="setting-icon">
+            📅
+        </div>
+
+        <div class="setting-info">
+
+            <h3>
+                Plan semanal
+            </h3>
+
+            <p>
+                Configura qué rutina realizar cada día.
+            </p>
+
+        </div>
+
+        <div class="setting-arrow">
+            >
+        </div>
+
+    </div>
 
 
-        <div class="setting-card" id="ajusteRutina">
+    <div class="setting-card" id="ajusteImagenes">
 
-            <div class="setting-icon">
-                🏋️
-            </div>
+        <div class="setting-icon">
+            🖼️
+        </div>
 
-            <div class="setting-info">
+        <div class="setting-info">
 
-                <h3>
-                    Rutina
-                </h3>
+            <h3>
+                Imágenes
+            </h3>
 
-                <p>
-                    Modificar ejercicios y entrenamientos.
-                </p>
-
-            </div>
-
-            <div class="setting-arrow">
-                >
-            </div>
+            <p>
+                Mostrar ilustraciones de ejercicios.
+            </p>
 
         </div>
 
 
-        <div class="setting-card" id="ajustePlanSemanal">
+        <label class="switch">
 
-            <div class="setting-icon">
-                📅
-            </div>
+            <input type="checkbox" checked>
 
-            <div class="setting-info">
+            <span></span>
 
-                <h3>
-                    Plan semanal
-                </h3>
+        </label>
 
-                <p>
-                    Configura qué rutina realizar cada día.
-                </p>
 
-            </div>
+    </div>
 
-            <div class="setting-arrow">
-                >
-            </div>
+
+    <div class="setting-card" id="ajusteNotificaciones">
+
+        <div class="setting-icon">
+            🔔
+        </div>
+
+        <div class="setting-info">
+
+            <h3>
+                Notificaciones
+            </h3>
+
+            <p>
+                Recibir avisos cuando termine el descanso.
+            </p>
+
+        </div>
+
+        <div class="setting-arrow">
+            >
+        </div>
+
+    </div>
+
+
+    <div class="setting-card" id="ajusteExportar">
+
+        <div class="setting-icon">
+            💾
+        </div>
+
+
+        <div class="setting-info">
+
+            <h3>
+                Copia de seguridad
+            </h3>
+
+            <p>
+                Guardar una copia de tus datos.
+            </p>
 
         </div>
 
 
-        <div class="setting-card" id="ajusteImagenes">
-
-            <div class="setting-icon">
-                🖼️
-            </div>
-
-            <div class="setting-info">
-
-                <h3>
-                    Imágenes
-                </h3>
-
-                <p>
-                    Mostrar ilustraciones de ejercicios.
-                </p>
-
-            </div>
-
-
-            <label class="switch">
-
-                <input type="checkbox" checked>
-
-                <span></span>
-
-            </label>
-
-
+        <div class="setting-arrow">
+            >
         </div>
-
-
-
-        <div class="setting-card" id="ajusteExportar">
-
-            <div class="setting-icon">
-                💾
-            </div>
-
-
-            <div class="setting-info">
-
-                <h3>
-                    Copia de seguridad
-                </h3>
-
-                <p>
-                    Guardar una copia de tus datos.
-                </p>
-
-            </div>
-
-
-            <div class="setting-arrow">
-                >
-            </div>
-
-
-        </div>
-
-
-
-
-        <div class="setting-card" id="ajusteImportar">
-
-            <div class="setting-icon">
-                ♻️
-            </div>
-
-
-            <div class="setting-info">
-
-                <h3>
-                    Restaurar copia
-                </h3>
-
-                <p>
-                    Recuperar tus datos guardados.
-                </p>
-
-            </div>
-
-
-            <div class="setting-arrow">
-                >
-            </div>
-
-
-        </div>
-
-
-
-
-        <div class="setting-card" id="ajusteBorrar">
-
-            <div class="setting-icon">
-                🗑️
-            </div>
-
-
-            <div class="setting-info">
-
-                <h3>
-                    Borrar historial
-                </h3>
-
-                <p>
-                    Eliminar entrenamientos guardados.
-                </p>
-
-            </div>
-
-
-            <div class="setting-arrow">
-                >
-            </div>
-
-
-        </div>
-
 
 
     </div>
 
 
 
-    <div class="home-card app-info">
 
-        <h3>
-            ℹ️ MiRutinaGym
-        </h3>
+    <div class="setting-card" id="ajusteImportar">
 
-        <p>
-            Tu entrenador personal.
-        </p>
+        <div class="setting-icon">
+            ♻️
+        </div>
+
+
+        <div class="setting-info">
+
+            <h3>
+                Restaurar copia
+            </h3>
+
+            <p>
+                Recuperar tus datos guardados.
+            </p>
+
+        </div>
+
+
+        <div class="setting-arrow">
+            >
+        </div>
+
 
     </div>
 
-    `;
 
 
-    content.innerHTML = html;
 
-    conectarBotonesAjustes();
+    <div class="setting-card" id="ajusteBorrar">
+
+        <div class="setting-icon">
+            🗑️
+        </div>
+
+
+        <div class="setting-info">
+
+            <h3>
+                Borrar historial
+            </h3>
+
+            <p>
+                Eliminar entrenamientos guardados.
+            </p>
+
+        </div>
+
+
+        <div class="setting-arrow">
+            >
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+<div class="home-card app-info">
+
+    <h3>
+        ℹ️ MiRutinaGym
+    </h3>
+
+    <p>
+        Tu entrenador personal.
+    </p>
+
+</div>
+
+`;
+
+
+content.innerHTML = html;
+
+conectarBotonesAjustes();
 
 }
 
@@ -2903,7 +2927,18 @@ if(plan){
     );
 
 }
+const notificaciones =
+    document.getElementById("ajusteNotificaciones");
 
+if(notificaciones){
+
+    notificaciones.addEventListener("click",()=>{
+
+        activarPush();
+
+    });
+
+}
     if(rutina){
 
         rutina.addEventListener("click",()=>{
