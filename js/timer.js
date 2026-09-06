@@ -5,7 +5,15 @@
 =================================================== */
 
 "use strict";
+/* ==========================
+   SESIÓN DE AUDIO iOS
+========================== */
 
+if ("audioSession" in navigator) {
+
+    navigator.audioSession.type = "transient";
+
+}
 /* ==========================
    SONIDO
 ========================== */

@@ -293,15 +293,15 @@ function mostrarEntrenamiento(datos){
 
 <div class="exercise-card">
 
-    <div class="exercise-header">
-
-       <div class="exercise-info">
-
-    <h3>
+    <h3 class="exercise-title">
 
         ${index+1}. ${ejercicio.nombre}
 
     </h3>
+
+    <div class="exercise-header">
+
+        <div class="exercise-info">
 
     <p>
 
@@ -362,7 +362,7 @@ function mostrarEntrenamiento(datos){
                     Serie ${s.serie}:
 
                     <strong>
-                        ${s.kg || "-"} kg × ${s.reps || "-"}
+                       ${s.kg ? String(s.kg).replace(".", ",") : "-"} kg × ${s.reps || "-"}
                     </strong>
 
                 </div>
@@ -405,17 +405,13 @@ function mostrarEntrenamiento(datos){
 
                 <td>
 
-                    <input
-
-                        type="number"
-
-                        class="peso"
-
-                        data-ejercicio="${ejercicio.id}"
-
-                        data-serie="${serie}"
-
-                        placeholder="kg">
+                  <input
+    type="text"
+    inputmode="decimal"
+    class="peso"
+    data-ejercicio="${ejercicio.id}"
+    data-serie="${serie}"
+    placeholder="kg">
 
                 </td>
 
@@ -641,8 +637,14 @@ if(existe){
 }
 Training.guardarSesion(sesion);
 
+/* ==========================
+   LIMPIAR SESIÓN ACTUAL
+========================== */
 
-  mostrarMensaje(
+limpiarSeriesActuales();
+
+
+mostrarMensaje(
 
     "🎉 ¡Perfecto!",
 
@@ -2473,8 +2475,8 @@ function guardarSerie(ejercicioId, serie){
         claveSerie(ejercicioId,serie),
 
         {
-            peso:peso.value,
-            reps:reps.value
+            peso:peso.value.replace(",", "."),
+reps:reps.value
         }
 
     );
@@ -2513,6 +2515,26 @@ function desmarcarSerieCompletada(ejercicioId, serie){
         claveSerie(ejercicioId,serie),
         datos
     );
+
+}
+/* ==========================
+   LIMPIAR SERIES DE LA SESIÓN
+========================== */
+
+function limpiarSeriesActuales(){
+
+    Object.keys(localStorage).forEach(clave => {
+
+        if(
+            clave.startsWith("MiRutinaGym_") &&
+            clave.includes("_serie_")
+        ){
+
+            localStorage.removeItem(clave);
+
+        }
+
+    });
 
 }
 /* ==========================
@@ -3127,17 +3149,41 @@ mostrarConfirmacion(
 
     });
 
-}    const borrar = document.getElementById("ajusteBorrar");
+}   const borrar = document.getElementById("ajusteBorrar");
 
-    if(borrar){
+if(borrar){
 
-        borrar.addEventListener("click",()=>{
+    borrar.addEventListener("click",()=>{
 
-            alert("Borrar historial");
+        mostrarConfirmacion(
 
-        });
+            "🗑️ Borrar historial",
 
-    }
+            "Se eliminarán todos los entrenamientos guardados. Esta acción no se puede deshacer. ¿Deseas continuar?",
+
+            ()=>{
+
+                localStorage.removeItem(
+                    Storage.claveHistorial
+                );
+
+                mostrarMensaje(
+
+                    "✅ Historial borrado",
+
+                    "Todos los entrenamientos guardados se han eliminado."
+
+                );
+
+            },
+
+            "🗑️ Borrar"
+
+        );
+
+    });
+
+}
     }
 function obtenerEjercicio(dia,id){
 
