@@ -11,7 +11,7 @@
    VERSIÓN DE CACHÉ
 ========================== */
 
-const CACHE_NAME = "MiRutinaGym-v3.1-final-v4";
+const CACHE_NAME = "MiRutinaGym-v3.1-final-v5";
 
 
 /* ==========================
